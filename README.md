@@ -15,25 +15,31 @@ wget https://nvlabs-fi-cdn.nvidia.com/stylegan2-ada-pytorch/pretrained/ffhq.pkl 
 ```
 ## Restoring images
 
-To run the restoration on degraded images, use
+To run the tasks presented in the paper, use:
 
 ```bash 
 python run.py --dataset_path datasets/samples
 ```
 
+Some sample images have already been provided in `datasets/samples`.
+
 ## Other datasets
 First, download a pretrained StyleGAN2 generator for your dataset (.pkl), and pass it's path to the `--pkl_path` option.
-If the resolution is different from 1024 you also need to set it using the `--resolution` option.
+If the resolution of your data is different from 1024 you also need to set it using the `--resolution` option.
+This resolution does not need to match the pretrained generator's resolution; for best results pick a high resolution generator even if your images are smaller. 
 
 Finally, on datasets other than faces you may need to scale all learning rates up or down by a constant amount to compensate for the different scale of the latent space. For this you can use the CLI option `--global_lr_scale`.
 
-## Using your own degradation functions
+## Restoring your own degradations
 Use the option `--tasks custom`, then find the following code in `run.py` and update it with your degradation function:
 
 ```python
 class YourDegradation:
     def degrade_ground_truth(self, x):
-        "The true degradation you are attempting to invert."
+        """
+        The true degradation you are attempting to invert.
+        This assumes you are testing against clean ground truth images.
+        """
         raise NotImplementedError
     
     def degrade_prediction(self, x):
