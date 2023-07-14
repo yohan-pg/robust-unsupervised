@@ -1,2 +1,11 @@
 *.pt
 *.pkl
+**/__pycache__/
+
+/.venv/
+/out/
+
+/.envrc
+/TODO.md
+
+/scripts/

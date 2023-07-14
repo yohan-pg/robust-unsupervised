@@ -3,7 +3,7 @@ import benchmark.config as config
 from .prelude import *
 
 sys.path.append(os.path.dirname(__file__) + "/" + "DiffJPEG")
-from DiffJPEG import DiffJPEG
+from benchmark.DiffJPEG.DiffJPEG import DiffJPEG
 
 import torchvision.transforms.functional as TF
 from PIL import JpegImagePlugin

@@ -1,10 +1,5 @@
 from typing import *
 
-if TYPE_CHECKING:
-    import ESIR.config as config
-else:
-    import __main__ as config 
-
 import copy
 import os
 
@@ -20,8 +15,9 @@ import torch.nn as nn
 import torch.nn.functional as F
 from torch import Tensor
 import math
-import dnnlib
-import legacy
+import dnnlib as dnnlib
+import dnnlib.legacy as legacy
+# import legacy
 import shutil
 from functools import partial
 import itertools
@@ -30,19 +26,17 @@ from warnings import warn
 import datetime
 import torchvision.transforms.functional as TF
 from torchvision.utils import save_image, make_grid
-
 import training.networks as networks
-from training.networks import normalize_2nd_moment
 
 from abc import ABC, abstractmethod, abstractstaticmethod, abstractclassmethod
 from dataclasses import dataclass, field
-
-ImageTensor = torch.Tensor # [B, C, H, W] with data between 0 and 1
 
 import ssl
 ssl._create_default_https_context = ssl._create_unverified_context
 
 warnings.filterwarnings("ignore", r"Named tensors and all their associated APIs.*")
+warnings.filterwarnings("ignore", r"Arguments other than a weight enum.*")
+warnings.filterwarnings("ignore", r"The parameter 'pretrained' is deprecated.*")
 
 
 
