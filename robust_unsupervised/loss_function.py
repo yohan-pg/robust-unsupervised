@@ -13,15 +13,16 @@ class MultiscaleLPIPS:
         self.min_loss_res = min_loss_res
         self.weights = level_weights
         self.l1_weight = l1_weight
-        self.lpips = LPIPS(net="vgg", verbose=False).cuda()
+        self.lpips_network = LPIPS(net="vgg", verbose=False).cuda()
 
-    def lpips(self, x, y, mask):
+    def measure_lpips(self, x, y, mask):
         if mask is not None:
+            # To avoid biasing the results towards black pixels, but random noise in the masked areas
             noise = (torch.randn_like(x) + 0.5) / 2.0
             x = x + noise * (1.0 - mask)
             y = y + noise * (1.0 - mask)
 
-        return self.lpips(x, y, normalize=True).mean() 
+        return self.lpips_network(x, y, normalize=True).mean() 
 
     def __call__(self, f_hat, x_clean: Tensor, y: Tensor, mask: Optional[Tensor] = None):
         x = f_hat(x_clean)
@@ -35,9 +36,9 @@ class MultiscaleLPIPS:
             # At extremely low resolutions, LPIPS stops making sense, so omit those
             if y.shape[-1] <= self.min_loss_res:
                 break
-
+            
             if weight > 0:
-                loss = self.lpips(x, y, mask)
+                loss = self.measure_lpips(x, y, mask)
                 losses.append(weight * loss)
 
             if mask is not None:

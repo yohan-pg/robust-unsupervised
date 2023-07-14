@@ -130,13 +130,12 @@ for k in range(2, len(task_names) + 1):
             )
         )
 
-all_tasks: List[Task] = composed_tasks + single_tasks
+all_tasks: List[Task] = single_tasks + composed_tasks
 
 extreme_tasks = []
 extreme_tasks += [get_task(name, "XL") for name in task_names]
 extreme_tasks += [full_composed_task]
 extreme_tasks += [get_task(name, "XS") for name in task_names]
-
 
 
 ###

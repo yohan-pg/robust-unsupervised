@@ -1,7 +1,7 @@
-# Robust Unsueprvised StyleGAN Image Restoration
-<!-- todo arxiv and website links -->
+# Robust Unsupervised StyleGAN Image Restoration
+### [[Arxiv]](https://arxiv.org/abs/2302.06733) [[Website]](https://lvsn.github.io/RobustUnsupervised/)
 
-Code for the paper ......
+Code for the paper `Robust Unsupervised StyleGAN Image Restoration` presented at CVPR 2023. 
 
 ## Installation
 
@@ -18,13 +18,8 @@ wget https://nvlabs-fi-cdn.nvidia.com/stylegan2-ada-pytorch/pretrained/ffhq.pkl 
 To run the restoration on degraded images, use
 
 ```bash 
-python restore.py --dataset_path datasets/samples/$TASK --task $TASK
+python run.py --dataset_path datasets/samples
 ```
-Where `$TASK` can be `deartifact`, `denoise`, `upsample`, or `inpaint`. 
-
-Results will be saved in the `out` folder.
-
-## Other degradations
 
 ## Other datasets
 First, download a pretrained StyleGAN2 generator for your dataset (.pkl), and pass it's path to the `--pkl_path` option.
@@ -33,15 +28,22 @@ If the resolution is different from 1024 you also need to set it using the `--re
 Finally, on datasets other than faces you may need to scale all learning rates up or down by a constant amount to compensate for the different scale of the latent space. For this you can use the CLI option `--global_lr_scale`.
 
 ## Using your own degradation functions
-The codebase was designed to run ...........
-If you want to run on your own 
+Use the option `--tasks custom`, then find the following code in `run.py` and update it with your degradation function:
 
-## 
+```python
+class YourDegradation:
+    def degrade_ground_truth(self, x):
+        "The true degradation you are attempting to invert."
+        raise NotImplementedError
+    
+    def degrade_prediction(self, x):
+        """
+        Differentiable approximation to the degradation in question. 
+        Can be identical to the true degradation if it is invertible.
+        """
+        raise NotImplementedError
+```
+If you do not have access to ground truth images, you can open degraded images directly and make `degrade_ground_truth` an indentity function.
+
+## Evaluation
 Coming soon.
-<!-- For evaluation purposes, the paper used synthetic degradations which were applied on-the-fly to clean images. For this you can use:
-`python restore_synthetic.py --dataset_path datasets/samples/raw`
-where `datasets/samples/raw` contains clean images.  -->
-<!-- Run `python eval_restoration.py out/$NAME` where `$NAME` is the folder name for your expriment, which can be specified in `restoration_config.py`. --> 
-
-
-
