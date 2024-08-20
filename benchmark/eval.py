@@ -109,7 +109,7 @@ def eval_experiment(
                 ),
             )
 
-        if COMPUTE_DISTANCE_METRICS := False:
+        if COMPUTE_DISTANCE_METRICS := True:
             degraded_scores = {accronym(metric): [] for metric in distance_metrics}
             ground_truth_scores = {accronym(metric): [] for metric in distance_metrics}
 
