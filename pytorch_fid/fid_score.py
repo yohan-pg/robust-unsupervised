@@ -1,4 +1,9 @@
-"""Calculates the Frechet Inception Distance (FID) to evalulate GANs
+"""
+This code is a slightly modified version of https://github.com/mseitzer/pytorch-fid/tree/master, changed to allow for recursive globs and saving precomputed stats.
+
+--------------------------
+
+Calculates the Frechet Inception Distance (FID) to evalulate GANs
 
 The FID metric calculates the distance between two distributions of images.
 Typically, we have summary statistics (mean & covariance matrix) of one
