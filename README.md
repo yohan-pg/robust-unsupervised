@@ -52,4 +52,6 @@ class YourDegradation:
 If you do not have access to ground truth images, you can open degraded images directly and make `degrade_ground_truth` an indentity function.
 
 ## Evaluation
-Coming soon.
+```
+python -m benchmark.eval
+```

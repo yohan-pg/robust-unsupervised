@@ -14,7 +14,7 @@ import torch
 import sys
 
 DATASET_NAME = "FFHQ-X"
-DATASET_PATH = "../esir/datasets/homemade"
+DATASET_PATH = "datasets"
 
 CROP_RES = 128
 CROP_RES_LABEL = "" if CROP_RES == 256 else str(CROP_RES)  # legacy
@@ -59,14 +59,13 @@ def crop_dataset():
     if True:
         make_crops(
             globr(f"{DATASET_PATH}/{DATASET_NAME}/**/*.png"),
-            f"../esir/datasets/{DATASET_NAME}_crops{CROP_RES}{CROP_NUM_LABEL}",
+            f"datasets/{DATASET_NAME}_crops{CROP_RES}{CROP_NUM_LABEL}",
             10 if "DRY_RUN" in os.environ else CROP_NUM,
         )
-    # needs this branch for --save-stats https://github.com/jwblangley/pytorch-fid.git also make sure to put rglob instead of glob
     if True:
         print("Evaluating FID...")
         os.system(
-            f"python -m pytorch_fid --batch-size 50 --save-stats ../esir/datasets/{DATASET_NAME}_crops{CROP_RES} ../esir/datasets/{DATASET_NAME}_crops{CROP_RES}{CROP_NUM_LABEL}.npz"
+            f"python -m pytorch_fid --batch-size 50 --save-stats datasets/{DATASET_NAME}_crops{CROP_RES} benchmark/FFHQ-X_crops128_ncrops1000.npz"
         )
 
 
@@ -99,9 +98,7 @@ def eval_experiment(
                 10 if "DRY_RUN" in os.environ else CROP_NUM,
             )
             result = subprocess.check_output(
-                f"python -m pytorch_fid {DATASET_PATH}/{DATASET_NAME}_crops{CROP_RES}{CROP_NUM_LABEL}.npz {expr_path}/crops{CROP_RES_LABEL}{suffix}".split(
-                    " "
-                )
+                f"python -m pytorch_fid benchmark/FFHQ-X_crops128_ncrops1000.npz {expr_path}/crops{CROP_RES_LABEL}{suffix}".split(" ")
             )
             fid_score = float(result.decode("utf8").strip().replace("FID:  ", ""))
             json.dump(
@@ -112,7 +109,7 @@ def eval_experiment(
                 ),
             )
 
-        if COMPUTE_DISTANCE_METRICS := True:
+        if COMPUTE_DISTANCE_METRICS := False:
             degraded_scores = {accronym(metric): [] for metric in distance_metrics}
             ground_truth_scores = {accronym(metric): [] for metric in distance_metrics}
 
@@ -170,4 +167,6 @@ def eval_all_experiments(
 
 
 if __name__ == "__main__":
-    eval_all_experiments("out", ["_W++"])
+    import sys 
+    breakpoint()
+    eval_all_experiments(sys.argv[1] + "/*", ["_W++"])

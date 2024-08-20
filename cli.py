@@ -14,7 +14,7 @@ class Config:
     pkl_path: str = "pretrained_networks/ffhq.pkl"
     "The location of the pretrained StyleGAN."
 
-    dataset_path: str = "datasets/samples"
+    dataset_path: str = "datasets/FFHQ-X"
     "The location of the images to process."
     
     resolution: int = 1024
