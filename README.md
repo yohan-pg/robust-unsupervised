@@ -52,6 +52,14 @@ class YourDegradation:
 If you do not have access to ground truth images, you can open degraded images directly and make `degrade_ground_truth` an indentity function.
 
 ## Evaluation
+To run the full evaluation, use: 
 ```
 python -m benchmark.eval
+```
+Due to variability the numbers may not match the paper exactly, but you should expect scores to be equal or better on average. For instance:
+```
+XL Upsampling: 21.5 (this repo) vs. 21.3 (paper)
+XL Denoising: 17.8 (this repo) vs. 17.9 (paper)
+XL Deartifacting: 16.7 (this repo) vs. 18.7 (paper)
+XL Inpainting: 14.0 (this repo) vs 15.0 (paper)
 ```
