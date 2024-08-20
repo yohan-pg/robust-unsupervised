@@ -63,3 +63,4 @@ XL Denoising: 17.8 (this repo) vs. 17.9 (paper)
 XL Deartifacting: 16.7 (this repo) vs. 18.7 (paper)
 XL Inpainting: 14.0 (this repo) vs 15.0 (paper)
 ```
+This codebase embeds the FID code from https://github.com/mseitzer/pytorch-fid, please consider citing them.
