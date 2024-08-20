@@ -56,7 +56,7 @@ To run the full evaluation, use:
 ```
 python -m benchmark.eval
 ```
-Due to variability the numbers may not match the paper exactly, but you should expect scores to be equal or better on average. For instance:
+Due to random variability the numbers may not match the paper exactly, but you should expect scores to be equal or better on average. For instance:
 ```
 XL Upsampling: 21.5 (this repo) vs. 21.3 (paper)
 XL Denoising: 17.8 (this repo) vs. 17.9 (paper)
